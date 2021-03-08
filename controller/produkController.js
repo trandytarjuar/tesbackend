@@ -1,36 +1,19 @@
 
 const produk = require('../model/produkModel');
-const fs = require('fs');
-const path = require('path'); 
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-    destination: (req,file,cb)=> {
-        cb(null,'uploads')
-    },
-    filename:(req, file, cb)=>{
-        cb(null, file.fieldname+'-'+date.now())
-    }
-});
-
-const upload = multer({ storage:storage});
-
 
 
 exports.postDataproduk = (req, res) =>{
 
-    let {nama_produk,kode_produk,img} = req.body;
-    
+    let {nama_produk,harga} = req.body;
+    let image  = req.file.path;   
      
         let addproduk = new produk({
             nama_produk : nama_produk,
-            kode_produk : kode_produk,
-            img         : {
-                data: fs.readFileSync(path.join(__dirname+'/uploads'+req.file.filename)),
-                contentType: 'image/png/jpg'
-            }
+            harga : harga,
+            image       : image
             
           })
+          
           
           
        addproduk.save().then (doc => {

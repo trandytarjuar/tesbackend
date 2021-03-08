@@ -20,4 +20,6 @@ produkRouter
          .delete(produkController.deleteDataprodukById)
          
          
+         
+         
 module.exports = produkRouter;

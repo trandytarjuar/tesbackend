@@ -3,12 +3,14 @@ const mongodb = require ('mongoose');
 const produkDB = new mongodb.Schema({
     nama_produk:{
         type: String
-    },kode_produk:{
+    },harga:{
         type: String
-    },img:{
-        data: Buffer,
-        contentType: String
+    },image:{
+        type: String,
+        require: true
     }
+}, {
+    timestamps: true
 })
 
 const produk = mongodb.model('produk',produkDB);

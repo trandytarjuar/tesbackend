@@ -3,9 +3,31 @@ const bodyParser = require('body-parser')
 
 const dotenv = require('dotenv');
 const mongodb = require('mongoose');
+const multer = require('multer');
 
 const kategoriRouter = require('./router/kategoriRouter');
 const produkRouter = require('./router/produkRouter')
+
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null,'images');
+    },
+    filename:(req, file, cb)=> {
+        cb(null, new Date().getTime() + '-' + file.originalname)
+    }
+})
+
+// const fileFilter = (req, file, cb) => {
+//     if(
+//         file.mimetype === 'img/png' ||
+//         file.mimetype === 'img/jpg' ||
+//         file.mimetype === 'img/jpeg'
+//     ){
+//         cb(null, true);
+//     } else {
+//         cb(null, false);
+//     }
+// }
 
 
 
@@ -35,6 +57,7 @@ app.use((req, res, next) =>{
  req.requestTime = new Date().toISOString();
  next();
 })
+app.use(multer({ storage : fileStorage}).single('image'))
 
 
 app.use('/kategori',kategoriRouter);
