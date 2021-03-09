@@ -4,13 +4,14 @@ const produk = require('../model/produkModel');
 
 exports.postDataproduk = (req, res) =>{
 
-    let {nama_produk,harga} = req.body;
+    let {nama_produk,harga,kode_produk} = req.body;
     let image  = req.file.path;   
-     
+     console.log(image)
         let addproduk = new produk({
             nama_produk : nama_produk,
             harga : harga,
-            image       : image
+            kode_produk: kode_produk,
+            foto_produk       : image
             
           })
           
@@ -45,7 +46,7 @@ exports.getAllDataprodukById = async(req, res) =>{
    
     let nama_produk = req.params.id;
 
-    let dataHasil = await kategori.find({nama_produk: {$regex: nama_produk, $options: 'i'}});
+    let dataHasil = await produk.find({nama_produk: {$regex: nama_produk, $options: 'i'}});
     res.status(200).json({
     
         status : "success",
@@ -60,7 +61,17 @@ exports.getAllDataprodukById = async(req, res) =>{
 exports.updateDataprodukById = async(req, res) =>{
 
     console.log(req.body)
-    await produk.findByIdAndUpdate(req.params.id,req.body,function (err, docs) { 
+    let {nama_produk,harga,kode_produk} = req.body;
+    let image  = req.file.path;   
+     
+        let body = {
+            nama_produk : nama_produk,
+            harga : harga,
+            kode_produk : kode_produk,
+            foto_produk       : image
+            
+          }
+    await produk.findByIdAndUpdate(req.params.id, body,function (err, docs) { 
      if (err){ 
          console.log(err) 
          res.status(400).json(err);
@@ -75,7 +86,7 @@ exports.updateDataprodukById = async(req, res) =>{
  exports.deleteDataprodukById = async(req, res) =>{
 
 
-    await nama_produk.findByIdAndDelete(req.params.id,function (err, docs) { 
+    await produk.findByIdAndDelete(req.params.id,function (err, docs) { 
      if (err){ 
          console.log(err) 
          res.status(400).json(err);

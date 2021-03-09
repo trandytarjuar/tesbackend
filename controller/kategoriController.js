@@ -71,7 +71,7 @@ exports.updateDatakategoriById = async(req, res) =>{
  exports.deleteDatakategoriById = async(req, res) =>{
 
 
-    await nama_kategori.findByIdAndDelete(req.params.id,function (err, docs) { 
+    await kategori.findByIdAndDelete(req.params.id,function (err, docs) { 
      if (err){ 
          console.log(err) 
          res.status(400).json(err);

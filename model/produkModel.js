@@ -5,9 +5,12 @@ const produkDB = new mongodb.Schema({
         type: String
     },harga:{
         type: String
-    },image:{
+    },kode_produk:{
+        type: String
+    },
+    foto_produk:{
         type: String,
-        require: true
+        
     }
 }, {
     timestamps: true
